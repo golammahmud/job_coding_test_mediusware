@@ -45,7 +45,7 @@ function ApiContext(props) {
   };
 
   return (
-    <div className="container ">
+    <div className="container">
       <h1 className="text-left text-3xl">Products</h1>
       <Form className="mx-auto flex space-x-4  ">
         <Row className="">
@@ -138,7 +138,7 @@ function ApiContext(props) {
                     <td>{item.id}</td>
                     <td>{item.title}</td>
                     <td>{item.description}</td>
-                    <td>{item.created_at}</td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>

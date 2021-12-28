@@ -76,9 +76,12 @@ class product_variant_price(models.Model):
     product_variants=models.ForeignKey(product_variant,related_name="product_variant", on_delete=models.CASCADE)
     price=models.FloatField(max_length=20)
     stock=models.IntegerField()
-    products=models.ForeignKey(Product, on_delete=models.CASCADE)
+    products=models.ForeignKey(Product, on_delete=models.CASCADE ,related_name='products')
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.products.slug
     
     
     
