@@ -1,12 +1,11 @@
 import "./App.css";
-import Products from "../src/components/products";
-import  ProductContext  from "../src/components/productcontext";
-import ApiContext from "../src/components/apicontext";
+import ProductContext from "../src/component/context/productcontext"
+import Home from "../src/component/pages/products"
 export default function App() {
   return (
-    <ApiContext/>
-    // <ProductContext>
-    //   <Products />
-    // </ProductContext>
+   
+    <ProductContext>
+     <Home/>
+    </ProductContext>
   );
 }

@@ -11,9 +11,9 @@ class product_variant_price_Seriaizer(serializers.ModelSerializer):
         fields = '__all__'
         include=["product_variant","products"]
         
-class ProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.HyperlinkedModelSerializer):
     
-    products=serializers.StringRelatedField(many=True)
+    products=product_variant_price_Seriaizer(many=True , read_only=True)
     class Meta:
         model = Product
         fields = ['id','title','description','slug','created_at','products']

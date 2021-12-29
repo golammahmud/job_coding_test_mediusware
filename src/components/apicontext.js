@@ -20,11 +20,46 @@ function ApiContext(props) {
   const url = "http://127.0.0.1:8000/products/";
   const [items, setItems] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [product,setProduct] = useState([]);
+
+  const [input,setInput] = useState('');
+  const [output,setOutput] = useState([]);
+
+// items.map((item)=>{
+//     setProduct(item.products)
+// })
+
+
+console.log(output)
+
+output.map((item, index)=>{
+  {console.log(item.title)}
+  return (
+    
+    <p>{item.title}</p>
+  )
+})
+
+useEffect(() => {
+  setOutput([])
+  items.filter((val)=>{
+    if(val.title.toLowerCase().includes(input.toLowerCase())){
+      setOutput(output=>[...output,val])
+    }
+    
+  })
+ 
+  // console.log(output)
+},[input])
+
+
   var headers = {}
-  console.log(items);
+
   useEffect(() => {
     fetchProduct();
   }, []);
+
+
   const fetchProduct = async () => {
     try {
       const response = await fetch(url, {
@@ -64,6 +99,9 @@ function ApiContext(props) {
                   placeholder="Product Title..."
                   type="text"
                   name="search"
+                  onChange={(e)=>{
+                    setInput(e.target.value)
+                  }}
                 />
               </label>
             </Col>
@@ -129,24 +167,46 @@ function ApiContext(props) {
               <th>Action</th>
             </tr>
           </thead>
-
-          {items.map((item, index) => {
-            return (
-              <>
-                <tbody key={index}>
-                  <tr>
-                    <td>{item.id}</td>
-                    <td>{item.title}</td>
-                    <td>{item.description}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </>
-            );
-          })}
+          {output?(<> {output.map((item, index) => {
+               
+               return (
+                 <>
+                 
+                   <tbody key={index}>
+                     <tr>
+                       <td>{item.id}</td>
+                       <td>{item.title}</td>
+                       <td>{item.description}</td>
+                      
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                     </tr>
+                   </tbody>
+                 </>
+               );
+             })}</>):(<> {items.map((item, index) => {
+               
+               return (
+                 <>
+                 
+                   <tbody key={index}>
+                     <tr>
+                       <td>{item.id}</td>
+                       <td>{item.title}</td>
+                       <td>{item.description}</td>
+                      
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                     </tr>
+                   </tbody>
+                 </>
+               );
+             })}</>)}
+         
           {/* {items.map((item,index) => {
             return (
               <>
