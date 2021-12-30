@@ -28,7 +28,7 @@ function Forms() {
       }
       
     });
-    setItems(output);
+    // setItems(output);
   }, [input]);
 
   console.log(output);
@@ -57,6 +57,7 @@ function Forms() {
                 placeholder="Product Title..."
                 type="text"
                 name="search"
+                value={input}
                 onChange={(e) => {
                   setInput(e.target.value);
                 }}
