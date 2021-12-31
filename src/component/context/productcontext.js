@@ -11,20 +11,18 @@ import {
   Pagination,
 } from "react-bootstrap";
 
-
-
 const loadContext = new createContext();
 const ProductContexts = new createContext();
 export { ProductContexts, loadContext };
 
-
 function ProductContext(props) {
+  // const url = "https://fakestoreapi.com/products";
   const url = "http://127.0.0.1:8000/products/";
   var headers = {};
 
   const [items, setItems] = useState([]);
   const [isLoading, setLoading] = useState(true);
-
+  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     fetchProduct();
   }, []);
@@ -38,7 +36,9 @@ function ProductContext(props) {
       });
       if (response.status === 200) {
         const data = await response.json();
+        // const {results} = data;
         setItems(data.results);
+
         setLoading(false);
       } else {
         throw new Error("data not found");
@@ -52,7 +52,7 @@ function ProductContext(props) {
     <>
       <ProductContexts.Provider value={[items, setItems]}>
         <loadContext.Provider value={[isLoading, setLoading]}>
-            {props.children}
+          {props.children}
         </loadContext.Provider>
       </ProductContexts.Provider>
     </>

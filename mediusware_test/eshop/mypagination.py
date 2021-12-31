@@ -4,7 +4,7 @@ from rest_framework.pagination import LimitOffsetPagination
 
 
 class StudentViewPagination(PageNumberPagination):
-    page_size = 3
+    page_size = 2
     # page_query_param='query'
     page_size_query_param='records'
     max_page_size=5
@@ -12,7 +12,7 @@ class StudentViewPagination(PageNumberPagination):
     
     
 class MyLimitOffsetPagination(LimitOffsetPagination):
-    default_limit=3
-    # limit_query_param='limitquery'   
-    # offset_query_param='offsetrecords' 
+    default_limit=2
+    limit_query_param='limitquery'   
+    offset_query_param='offsetrecords' 
     max_limit=6

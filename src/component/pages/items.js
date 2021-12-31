@@ -17,10 +17,10 @@ import {
 } from "react-bootstrap";
 
 function Items() {
-    const [items, setItems] = useContext(ProductContexts);
+    const [items,setItems] = useContext(ProductContexts);
     const [isLoading, setLoading] = useContext(loadContext);
 
-
+// console.lo0g(`products: ${product}`);
 
   return (
     <div>

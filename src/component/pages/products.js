@@ -15,8 +15,8 @@ import {
   Table,
   Pagination,
 } from "react-bootstrap";
-import Items from "./items";
-
+// import Items from "./items";
+import Test from  "./test";
 function Products() {
   const [items, setItems] = useContext(ProductContexts);
   const [isLoading, setLoading] = useContext(loadContext);
