@@ -1,7 +1,7 @@
 import { React, useContext, useState, useEffect } from "react";
 import "../../index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { ProductContexts, loadContext } from "../context/productcontext";
+import { ProductContexts, loadContext,VariantContexts } from "../context/productcontext";
 import Isloading from "../isloading";
 
 import {
@@ -15,17 +15,20 @@ import {
 } from "react-bootstrap";
 function Forms() {
   const [items, setItems] = useContext(ProductContexts);
+  const [variant, setVariant] = useContext(VariantContexts);
   const [isLoading, setLoading] = useContext(loadContext);
   const [input, setInput] = useState("");
   const [output, setOutput] = useState([]);
-  // const [product, setProduct] = useState([]);
 
+  const { results: product } = items;
 
+ 
+ 
 
 
   useEffect(() => {
     setOutput([]);
-    items.filter((val) => {
+    product.filter((val) => {
       if (val.title.toLowerCase().includes(input.toLowerCase())) {
         setOutput((output) => [...output, val]);
       }
@@ -67,10 +70,18 @@ function Forms() {
 
             <Col xs={"auto"}>
               <Form.Select aria-label="Default select example">
-                <option>variant</option>
+              <option>variant</option>
+                {variant.map((val) => {
+                  return (
+                    <option key={val.id} value={val.id}>
+                      {val.title}
+                    </option>
+                  );
+                })}
+                {/* <option>variant</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="3">Three</option> */}
               </Form.Select>
             </Col>
 
@@ -120,8 +131,6 @@ function Forms() {
               <th>Title</th>
               <th>Description</th>
               <th>Variant</th>
-              <th>Price</th>
-              <th>Stock</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -129,80 +138,127 @@ function Forms() {
             {/* if condition */}
             {output != null && output.length > 0
               ? output.map((item, index) => {
-                return (
-                  <tr>
-                    <td>{item.id}</td>
-                    <td>{item.title}</td>
-                    <td>{item.description}</td>
-                    <td></td>
-  
-                    {item.products.map((val) => {
-                      return (
+                  return (
+                    <tr key={index}>
+                      <td>{item.id}</td>
+                      <td>{item.title}</td>
+                      <td>{item.description}</td>
+
+                      {item.products != null && item.products.length > 0 ? (
                         <>
-                          {" "}
-                          <td>
-                            <ul>
-                              <li>{val.price}</li>
-                            </ul>
-                          </td>
-                          <td>
-                            <ul>
-                              <li>{val.stock}</li>
-                            </ul>
-                          </td>
+                          {item.products.map((val) => {
+                            return (
+                              <Table
+                                responsive
+                                striped
+                                bordered
+                                hover
+                                size="xl"
+                              >
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <span className="text-md font-bold">
+                                        {val.product_variants}
+                                      </span>
+                                    </td>
+
+                                    <td>
+                                      <span className="text-md font-bold">
+                                        Price :
+                                      </span>
+                                      {val.price}
+                                    </td>
+
+                                    <td>
+                                      <span className="text-md font-bold">
+                                        Stock:
+                                      </span>
+                                      {val.stock}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </Table>
+                            );
+                          })}
                         </>
-                      );
-                    })}
-                  </tr>
-                );
+                      ) : (
+                        <span className="text-md font-semibold grid justify-center align-content-center">
+                          {" "}
+                          variants not found
+                        </span>
+                      )}
+
+                      <td>
+                        <Button type="button" className="btn btn-primary">
+                          Edit
+                        </Button>
+                      </td>
+                    </tr>
+                  );
                 })
-              : items.map((item, index) => {
-                
-                return (
-                  <tr>
-                    <td>{item.id}</td>
-                    <td>{item.title}</td>
-                    <td>{item.description}</td>
-                    <td></td>
-  
-                    {item.products.map((val) => {
-                      return (
+              : product.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{item.id}</td>
+                      <td>{item.title}</td>
+                      <td>{item.description}</td>
+
+                      {item.products != null && item.products.length > 0 ? (
                         <>
-                          {" "}
-                          <td>
-                            <ul>
-                              <li>{val.price}</li>
-                            </ul>
-                          </td>
-                          <td>
-                            <ul>
-                              <li>{val.stock}</li>
-                            </ul>
-                          </td>
+                          {item.products.map((val) => {
+                            return (
+                              <Table
+                                responsive
+                                striped
+                                bordered
+                                hover
+                                size="xl"
+                              >
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <span className="text-md font-bold">
+                                        {val.product_variants}
+                                      </span>
+                                    </td>
+
+                                    <td>
+                                      <span className="text-md font-bold">
+                                        Price :
+                                      </span>
+                                      {val.price}
+                                    </td>
+
+                                    <td>
+                                      <span className="text-md font-bold">
+                                        Stock:
+                                      </span>
+                                      {val.stock}
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </Table>
+                            );
+                          })}
                         </>
-                      );
-                    })}
-                  </tr>
-                );
+                      ) : (
+                        <span className="text-md font-semibold grid justify-center align-content-center">
+                          {" "}
+                          variants not found
+                        </span>
+                      )}
+                      <td>
+                        <Button type="button" className="btn btn-primary">
+                          Edit
+                        </Button>
+                      </td>
+                    </tr>
+                  );
                 })}
           </tbody>
         </Table>
       </div>
-
-      {/* {items.map((val, index) => {
-            return (
-              <>
-                <tr>
-                  <td>{val.id}</td>
-                  <td>{val.title}</td>
-                  <td>{val.description}</td>
-                  <td></td>
-                </tr>
-              </>
-            );
-          })}
-        </tbody> */}
-      {/* </Table> */}
     </div>
   );
 }

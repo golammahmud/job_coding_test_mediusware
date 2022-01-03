@@ -14,7 +14,7 @@ class Product_variantAdmin(admin.ModelAdmin):
     pass
 @admin.register(product_variant_price)
 class product_variant_priceAdmin(admin.ModelAdmin):
-    pass
+    list_display=['product_variants','price','stock','products']
 
 @admin.register(Variant)
 class variantAdmin(admin.ModelAdmin):

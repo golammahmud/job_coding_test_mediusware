@@ -13,16 +13,21 @@ import {
 
 const loadContext = new createContext();
 const ProductContexts = new createContext();
-export { ProductContexts, loadContext };
+const VariantContexts = new createContext();
+export { ProductContexts, loadContext, VariantContexts };
 
 function ProductContext(props) {
   // const url = "https://fakestoreapi.com/products";
   const url = "http://127.0.0.1:8000/products/";
+  const url2 = "http://127.0.0.1:8000/variants/";
   var headers = {};
 
   const [items, setItems] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+
+
+
+  // get products
   useEffect(() => {
     fetchProduct();
   }, []);
@@ -37,7 +42,7 @@ function ProductContext(props) {
       if (response.status === 200) {
         const data = await response.json();
         // const {results} = data;
-        setItems(data.results);
+        setItems(data);
 
         setLoading(false);
       } else {
@@ -48,12 +53,47 @@ function ProductContext(props) {
     }
   };
 
+  // get products
+
+
+  //get products variants
+
+  const [variant, setVariant] = useState([]);
+
+  useEffect(() => {
+    fetchProductVariant();
+  }, []);
+
+  const fetchProductVariant = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/variants/", {
+        method: "GET",
+        mode: "cors",
+        headers: headers,
+      });
+      if (response.status === 200) {
+        const data = await response.json();
+        setVariant(data);
+        setLoading(false);
+      } else {
+        throw new Error("product variant not found");
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  //get products variants
+
+
   return (
     <>
       <ProductContexts.Provider value={[items, setItems]}>
-        <loadContext.Provider value={[isLoading, setLoading]}>
-          {props.children}
-        </loadContext.Provider>
+        <VariantContexts.Provider value={[variant, setVariant]}>
+          <loadContext.Provider value={[isLoading, setLoading]}>
+            {props.children}
+          </loadContext.Provider>
+        </VariantContexts.Provider>
       </ProductContexts.Provider>
     </>
   );

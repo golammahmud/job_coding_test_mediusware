@@ -20,6 +20,6 @@
 //   console.log(api);
 
 
-fetch('https://fakestoreapi.com/products')
+fetch("http://127.0.0.1:8000/variants/")
             .then(res=>res.json())
             .then(json=>console.log(json))

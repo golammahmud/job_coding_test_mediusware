@@ -20,6 +20,9 @@ import Test from  "./test";
 function Products() {
   const [items, setItems] = useContext(ProductContexts);
   const [isLoading, setLoading] = useContext(loadContext);
+  // const {count}=items;
+  // const [currentPage, setCurrentPage] = useState(1);
+  // console.log(items);
 
   return (
     <div>
@@ -39,7 +42,7 @@ function Products() {
       )}
 
       <div className="grid justify-items-start">
-        <div>Showing 1 to 2 out of 7 </div>
+        <div>Showing 1 to 2 out of  </div>
       </div>
       <div className="grid justify-items-end ">
         {" "}

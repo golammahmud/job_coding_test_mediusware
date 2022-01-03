@@ -54,12 +54,32 @@ class Product_images(models.Model):
    
 class Variant(models.Model):
     title = models.CharField(max_length=255,unique=True)
+    slug = models.SlugField(max_length=150,null=True,blank=True,unique=True)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.title
+    
+    def absolute_url(self):
+        return reverse ("variants-detail", kwargs={"id":self.id,"slug":self.slug})
+    
+    
+    
+    
+    
+def create_slug(instance, new_slug=None):
+    slug=slugify(instance.title)
+    if new_slug is not None:
+        slug=new_slug
+    qs=Variant.objects.filter(slug=slug).order_by('-id')
+    exists=qs.exists()
+    if exists:
+        new_slug="%s-%s" %(slug,qs.first().id)
+        return create_slug(instance,new_slug=new_slug)
+    return slug
+
 
 class product_variant(models.Model):
     variant=models.CharField(max_length=255)
@@ -81,7 +101,7 @@ class product_variant_price(models.Model):
     updated=models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.products.slug
+        return self.product_variants.variant + " " + str(self.price)
     
     
     

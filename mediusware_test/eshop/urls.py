@@ -6,6 +6,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 router = routers.DefaultRouter()
 
 router.register('products', views.ProductView,basename='genericview-detail')
+router.register('variants', views.VariantsViewSet,basename='variants-detail')
 
 urlpatterns = [
    
